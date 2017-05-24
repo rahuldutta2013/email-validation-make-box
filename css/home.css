@@ -1,0 +1,28 @@
+ .textarea {
+        width: 97%;
+        margin: 1%;
+        height: 16px;
+        border: none;
+    }
+    
+    .close-button {
+        background: transparent;
+        border: none;
+        border-right: 1px solid grey;
+    }
+    
+    .border {
+        margin: 1%;
+        border: 1px solid grey;
+        background: white;
+    }
+    
+    .outerDivTextBox {
+        width: 50%;
+        border: 2px solid;
+    }
+    
+    textarea:focus,
+    button:focus {
+        outline: none;
+    }
