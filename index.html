@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<style>
+<link rel="stylesheet" type="text/css" href="./css/home.css">
+<!--<style>
     .textarea {
         width: 97%;
         margin: 1%;
@@ -30,7 +31,7 @@
     button:focus {
         outline: none;
     }
-</style>
+</style>-->
 
 <body>
 
@@ -41,8 +42,8 @@
         </div>
     </div>
 
-    <script>
-        var app = angular.module('myApp', []);
+    <!--<script>
+        // var app = angular.module('myApp', []);
         app.controller('EmailCtrl', function ($scope) {
             var email_REGEXP = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
                 emailArray,
@@ -96,7 +97,11 @@
                 }
             };
         });
-    </script>
+    </script>-->
+
+    <script src='./js/app.js'></script>
+    <script src='./js/controller/email.controller.js'></script>
+    <script src='./js/directive/emailBox.directive.js'></script>
 </body>
 
 </html>
