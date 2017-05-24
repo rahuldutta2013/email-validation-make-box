@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<style>
+    .textarea {
+        width: 97%;
+        margin: 1%;
+        height: 16px;
+        border: none;
+    }
+    
+    .close-button {
+        background: transparent;
+        border: none;
+        border-right: 1px solid grey;
+    }
+    
+    .border {
+        margin: 1%;
+        border: 1px solid grey;
+        background: white;
+    }
+    
+    .outerDivTextBox {
+        width: 50%;
+        border: 2px solid;
+    }
+    
+    textarea:focus,
+    button:focus {
+        outline: none;
+    }
+</style>
+
+<body>
+
+    <div ng-app="myApp" ng-controller="EmailCtrl">
+        <div class="outerDivTextBox">
+            <email-box ng-if='validEmail' ng-repeat="eachEmail in boxEmail track by $index"></email-box>
+            <textarea ng-model="email" class="textarea" ng-change="changeModel()"></textarea>
+        </div>
+    </div>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('EmailCtrl', function ($scope) {
+            var email_REGEXP = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
+                emailArray,
+                arrOfValidEmails = [],
+                arrOfInvalidEmails = [];
+            $scope.boxEmail = [];
+            $scope.email = '';
+
+            //function call when model changes
+            $scope.changeModel = function () {
+                if ($scope.email.indexOf(',') > -1) {
+                    var arr = extractEmail();
+                    validateEmail(arr);
+                }
+            }
+
+            //function to extract emails from string
+            var extractEmail = function () {
+                emailArray = $scope.email.split(",");
+                return emailArray;
+            }
+
+            //function to validate emails
+            var validateEmail = function (emailArray) {
+                for (var i = 0; i < emailArray.length; i++) {
+                    if (email_REGEXP.test(emailArray[i])) {
+                        arrOfValidEmails.push(emailArray[i]);
+                    } else {
+                        arrOfInvalidEmails.push(emailArray[i])
+                    }
+                }
+                if (arrOfValidEmails.length) {
+                    $scope.validEmail = true;
+                    $scope.email = arrOfInvalidEmails.slice();
+                    arrOfInvalidEmails = [];
+                    $scope.boxEmail = arrOfValidEmails.slice();
+                    document.getElementsByClassName("textarea")[0].focus();
+                }
+            }
+        });
+
+        app.directive('emailBox', function () {
+            return {
+                restrict: 'E',
+                template: '<span class="border">{{eachEmail}}<button ng-click="remove()" class="close-button">&times;</button></span>',
+                link: function (scope, element, attrs, tabsCtrl) {
+                    scope.remove = function () {
+                        element.remove();
+                        document.getElementsByClassName("textarea")[0].focus();
+                    }
+                }
+            };
+        });
+    </script>
+</body>
+
+</html>
